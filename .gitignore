@@ -2,3 +2,5 @@
 **/.idea/tasks.xml
 **/*.iws
 **/local-mvn-repo/
+
+*/target/
