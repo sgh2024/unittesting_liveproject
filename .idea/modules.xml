@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AssetIngestService/AssetIngestService.iml" filepath="$PROJECT_DIR$/AssetIngestService/AssetIngestService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AssetMetadataRegistry/AssetMetadataRegistry.iml" filepath="$PROJECT_DIR$/AssetMetadataRegistry/AssetMetadataRegistry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AssetPricingRegistry/AssetPricingRegistry.iml" filepath="$PROJECT_DIR$/AssetPricingRegistry/AssetPricingRegistry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AssetPricingService/AssetPricingService.iml" filepath="$PROJECT_DIR$/AssetPricingService/AssetPricingService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AssetRegistry/AssetRegistry.iml" filepath="$PROJECT_DIR$/AssetRegistry/AssetRegistry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AssetSearchService/AssetSearchService.iml" filepath="$PROJECT_DIR$/AssetSearchService/AssetSearchService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AssetStoreFrontend/AssetStoreFrontend.iml" filepath="$PROJECT_DIR$/AssetStoreFrontend/AssetStoreFrontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AssetSubjectsRegistry/AssetSubjectsRegistry.iml" filepath="$PROJECT_DIR$/AssetSubjectsRegistry/AssetSubjectsRegistry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RootProject.iml" filepath="$PROJECT_DIR$/RootProject.iml" />
+    </modules>
+  </component>
+</project>
