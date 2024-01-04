@@ -21,7 +21,7 @@ class BugsTest
     AssetVendor partnerVendor = makeVendor(AssetVendorRelationshipLevel.Partner);
     Asset missing = givenAssetInResultsWithVendor(partnerVendor);
     AssetVendor otherPartnerVendor = makeVendor(AssetVendorRelationshipLevel.Partner);
-    Asset otherDisrupting = givenAssetInResultsWithVendor(partnerVendor);
+    Asset otherDisrupting = givenAssetInResultsWithVendor(otherPartnerVendor);
     List<Asset> expected = makeConsecutiveAssets(partnerVendor);
     // ACT
     whenOptimize();
