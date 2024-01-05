@@ -11,9 +11,7 @@ class RelationshipBasedOptimizer {
     public void optimize(SearchResults searchResults) {
         Iterator<Asset> iterator = searchResults.getFound().iterator();
         var showcaseFull = searchResults.getHotspot(Showcase).getMembers().size() > 0;
-        List<Asset> showcaseAssets = new ArrayList<>();
-        // We need to "remember" the assets per partner
-        var showcaseAssetsByPartner = new HashMap<AssetVendor, List<Asset>>();
+        var showcaseAssets = new ArrayList<Asset>();
         var partnerAssets = new ArrayList<Asset>();
         var goldAssets = new ArrayList<Asset>();
         var silverAssets = new ArrayList<Asset>();
@@ -30,10 +28,6 @@ class RelationshipBasedOptimizer {
 
             partnerAssets.add(asset);
 
-            // if we don't have a showcase, get one for this partner
-            if (showcaseAssets.size() == 0)
-                showcaseAssets = getShowcaseAssetsForPartner(showcaseAssetsByPartner, asset.getVendor());
-
             if (showcaseAssets.size() >= 5) {
                 if (Objects.equals(showcaseAssets.get(0).getVendor(), asset.getVendor()))
                     searchResults.getHotspot(TopPicks).addMember(asset);
@@ -41,8 +35,7 @@ class RelationshipBasedOptimizer {
                 if (showcaseAssets.size() != 0)
                     if (!Objects.equals(showcaseAssets.get(0).getVendor(), asset.getVendor()))
                         if (showcaseAssets.size() < 3)
-                            // instead of clearing the current showcase, just switch to one for the new target partner
-                            showcaseAssets = getShowcaseAssetsForPartner(showcaseAssetsByPartner, asset.getVendor());
+                            showcaseAssets.clear();
 
                 if (showcaseAssets.size() == 0 || Objects.equals(showcaseAssets.get(0).getVendor(), asset.getVendor()))
                     showcaseAssets.add(asset);
@@ -72,13 +65,5 @@ class RelationshipBasedOptimizer {
 
         for (var asset : silverAssets)
             searchResults.getHotspot(Fold).addMember(asset);
-    }
-
-    private List<Asset> getShowcaseAssetsForPartner(Map<AssetVendor, List<Asset>> map, AssetVendor vendor) {
-        if (map.containsKey(vendor))
-            return map.get(vendor);
-        var result = new ArrayList<Asset>();
-        map.put(vendor, result);
-        return result;
     }
 }
