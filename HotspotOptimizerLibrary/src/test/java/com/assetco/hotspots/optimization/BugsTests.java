@@ -1,18 +1,24 @@
 package com.assetco.hotspots.optimization;
 
-import com.assetco.search.results.Asset;
-import com.assetco.search.results.AssetVendor;
-import com.assetco.search.results.AssetVendorRelationshipLevel;
-import com.assetco.search.results.HotspotKey;
+import com.assetco.search.results.*;
 import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BugsTests
 {
-
   private static final int NUM_PARTNER_CONSECUTIVE_ASSETS = 4;
+  private SearchResults searchResults;
+
+  @BeforeEach
+  public void Setup()
+  {
+    searchResults = new SearchResults();
+  }
 
   @Test
   void precedingPartnerWithLongTrailingAssetsDoesNotWin()
@@ -21,47 +27,64 @@ class BugsTests
     AssetVendor partnerVendor = makeVendor(AssetVendorRelationshipLevel.Partner);
     Asset missing = givenAssetInResultsWithVendor(partnerVendor);
     AssetVendor otherPartnerVendor = makeVendor(AssetVendorRelationshipLevel.Partner);
-    Asset otherDisrupting = givenAssetInResultsWithVendor(otherPartnerVendor);
+    givenAssetInResultsWithVendor(otherPartnerVendor);
     List<Asset> expected = makeConsecutiveAssets(partnerVendor);
     // ACT
     whenOptimize();
     // ASSERT
-    thenHotspotDoesNotHave(HotspotKey.Showcase, missing);
-    thenHotspotHasExactly(HotspotKey.Showcase, expected);
+    assertTrue(thenHotspotDoesNotHave(HotspotKey.Showcase, missing));
+    assertTrue(thenHotspotHasExactly(HotspotKey.Showcase, expected));
   }
 
-  private void thenHotspotHasExactly(HotspotKey hotspotKey, List<Asset> expected)
+  private boolean thenHotspotHasExactly(HotspotKey hotspotKey, List<Asset> expected)
   {
-
+    var hotspotMembers = searchResults.getHotspot(hotspotKey).getMembers().toArray();
+    var expectedMembers = expected.toArray();
+    return Arrays.equals(hotspotMembers, expectedMembers);
   }
 
-  private void thenHotspotDoesNotHave(HotspotKey hotspotKey, Asset... missing)
+  private boolean thenHotspotDoesNotHave(HotspotKey hotspotKey, Asset... nonMembers)
   {
-
+    var hotspotMembers = searchResults.getHotspot(hotspotKey).getMembers();
+    return Arrays.stream(nonMembers).noneMatch(hotspotMembers::contains);
   }
 
   private void whenOptimize()
   {
-
+    SearchResultHotspotOptimizer optimizer = new SearchResultHotspotOptimizer();
+    optimizer.optimize(searchResults);
   }
 
-  private List<Asset> makeConsecutiveAssets(AssetVendor partnerVendor)
+  private List<Asset> makeConsecutiveAssets(AssetVendor vendor)
   {
     List<Asset> result = new ArrayList<>();
 
     for (int i = 0; i < NUM_PARTNER_CONSECUTIVE_ASSETS; i++) {
-      result.add(givenAssetInResultsWithVendor(partnerVendor));
+      result.add(givenAssetInResultsWithVendor(vendor));
     }
     return result;
   }
 
-  private Asset givenAssetInResultsWithVendor(AssetVendor partnerVendor)
+  private Asset givenAssetInResultsWithVendor(AssetVendor vendor)
   {
-    return null;
+    Asset asset = makeAsset(vendor);
+    searchResults.addFound(asset);
+    return asset;
   }
 
-  private AssetVendor makeVendor(AssetVendorRelationshipLevel assetVendorRelationshipLevel)
+  private static Asset makeAsset(AssetVendor vendor)
   {
-    return null;
+    String string = "any";
+    URI uri = URI.create(string);
+    Money money = new Money(BigDecimal.ZERO);
+    AssetPurchaseInfo info = new AssetPurchaseInfo(1, 1, money, money);
+    List<AssetTopic> topics = new ArrayList<>();
+    return new Asset(string, string, uri, uri, info, info, topics, vendor);
+  }
+
+  private AssetVendor makeVendor(AssetVendorRelationshipLevel relationshipLevel)
+  {
+    String string = "any";
+    return new AssetVendor(string, string, relationshipLevel, 1);
   }
 }
