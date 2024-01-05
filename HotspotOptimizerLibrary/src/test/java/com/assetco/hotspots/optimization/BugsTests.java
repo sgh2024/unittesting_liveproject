@@ -9,7 +9,7 @@ import org.junit.jupiter.api.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class BugsTest
+class BugsTests
 {
 
   private static final int NUM_PARTNER_CONSECUTIVE_ASSETS = 4;
