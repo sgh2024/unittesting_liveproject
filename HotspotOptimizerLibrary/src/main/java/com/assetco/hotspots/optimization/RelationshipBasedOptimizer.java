@@ -27,7 +27,7 @@ class RelationshipBasedOptimizer {
         // don't affect a showcase built by an earlier rule
         var showcaseFull = !searchResults.getHotspot(Showcase).getMembers().isEmpty();
         var showcaseCandidateAssets = new HashMap<AssetVendor, ArrayList<Asset>>();
-        List<Asset> showcaseAssets = null;
+        var showcaseAssets = new ArrayList<Asset>();
         var partnerAssets = new ArrayList<Asset>();
         var goldAssets = new ArrayList<Asset>();
         var silverAssets = new ArrayList<Asset>();
@@ -46,7 +46,7 @@ class RelationshipBasedOptimizer {
             // remember this partner asset
             partnerAssets.add(asset);
 
-            if (showcaseAssets != null) {
+            if (!showcaseAssets.isEmpty()) {
                 if (Objects.equals(showcaseAssets.get(0).getVendor(), asset.getVendor())) {
                     // too many assets in showcase - put in top picks instead...
                     if (showcaseAssets.size() >= 5)
@@ -56,12 +56,12 @@ class RelationshipBasedOptimizer {
                 }
             } else {
                 // add this asset to an empty showcase or showcase with same vendor in it
-                var currentAssets = getAssets(showcaseCandidateAssets, asset.getVendor());
+                var currentAssets = showcaseCandidateAssets.computeIfAbsent(asset.getVendor(), k -> new ArrayList<>());
                 currentAssets.add(asset);
                 // the first partner TO REACH the 3-asset minimum for a set of search
                 // results owns the showcase.
                 if (currentAssets.size() >= 3)
-                    showcaseAssets = currentAssets;
+                    showcaseAssets.addAll(currentAssets);
             }
         }
 
@@ -82,7 +82,7 @@ class RelationshipBasedOptimizer {
             searchResults.getHotspot(Fold).addMember(asset);
 
         // only copy showcase assets into hotspot if there are enough for a partner to claim the showcase
-        if (!showcaseFull && showcaseAssets != null) {
+        if (!showcaseFull && showcaseAssets.size() >= 3) {
             Hotspot showcaseHotspot = searchResults.getHotspot(Showcase);
             for (Asset asset : showcaseAssets)
                 showcaseHotspot.addMember(asset);
@@ -100,15 +100,5 @@ class RelationshipBasedOptimizer {
         // LOL acw-14511: gold assets should appear in fold box when appropriate
         for (var asset : silverAssets)
             searchResults.getHotspot(Fold).addMember(asset);
-    }
-
-    private static ArrayList<Asset> getAssets(HashMap<AssetVendor, ArrayList<Asset>> map,
-                                              AssetVendor vendor) {
-        var assets = map.get(vendor);
-        if (assets == null) {
-            map.put(vendor, new ArrayList<>());
-            return map.get(vendor);
-        }
-        return assets;
     }
 }
