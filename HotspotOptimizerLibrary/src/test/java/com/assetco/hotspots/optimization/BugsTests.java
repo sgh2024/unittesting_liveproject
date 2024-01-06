@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static com.assetco.search.results.AssetVendorRelationshipLevel.*;
 import static com.assetco.search.results.HotspotKey.*;
 
@@ -23,32 +22,26 @@ class BugsTests
   }
 
   @Test
-  void precedingPartnerWithLongTrailingAssetsDoesNotWin()
+  void precedingPartnerWithLongTrailingAssetsDoesWin()
   {
     // ARRANGE
     AssetVendor partnerVendorInShowcase = makeVendor(Partner);
     AssetVendor partnerVendorNotInShowcase = makeVendor(Partner);
-    Asset missing = givenAssetInResultsWithVendor(partnerVendorInShowcase);
+    List<Asset> expected = new ArrayList<>();
+    expected.add(givenAssetInResultsWithVendor(partnerVendorInShowcase));
     givenAssetInResultsWithVendor(partnerVendorNotInShowcase);
-    List<Asset> expected = makeConsecutiveAssets(partnerVendorInShowcase);
+    expected.addAll(makeConsecutiveAssets(partnerVendorInShowcase));
     // ACT
     whenOptimize();
     // ASSERT
-    assertTrue(thenHotspotDoesNotHave(HotspotKey.Showcase, missing));
-    assertTrue(thenHotspotHasExactly(HotspotKey.Showcase, expected));
+    thenHotspotHasExactly(Showcase, expected);
   }
 
-  private boolean thenHotspotHasExactly(HotspotKey hotspotKey, List<Asset> expected)
+  private void thenHotspotHasExactly(HotspotKey hotspotKey, List<Asset> expected)
   {
     var hotspotMembers = searchResults.getHotspot(hotspotKey).getMembers().toArray();
     var expectedMembers = expected.toArray();
-    return Arrays.equals(expectedMembers, hotspotMembers);
-  }
-
-  private boolean thenHotspotDoesNotHave(HotspotKey hotspotKey, Asset... nonMembers)
-  {
-    var hotspotMembers = searchResults.getHotspot(hotspotKey).getMembers();
-    return Arrays.stream(nonMembers).noneMatch(hotspotMembers::contains);
+    Assertions.assertArrayEquals(expectedMembers, hotspotMembers);
   }
 
   private void whenOptimize()
