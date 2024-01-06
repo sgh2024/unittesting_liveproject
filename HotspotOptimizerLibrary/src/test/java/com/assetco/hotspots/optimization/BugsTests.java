@@ -8,6 +8,8 @@ import java.net.URI;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.assetco.search.results.AssetVendorRelationshipLevel.*;
+import static com.assetco.search.results.HotspotKey.*;
 
 class BugsTests
 {
@@ -24,11 +26,11 @@ class BugsTests
   void precedingPartnerWithLongTrailingAssetsDoesNotWin()
   {
     // ARRANGE
-    AssetVendor partnerVendor = makeVendor(AssetVendorRelationshipLevel.Partner);
-    Asset missing = givenAssetInResultsWithVendor(partnerVendor);
-    AssetVendor otherPartnerVendor = makeVendor(AssetVendorRelationshipLevel.Partner);
-    givenAssetInResultsWithVendor(otherPartnerVendor);
-    List<Asset> expected = makeConsecutiveAssets(partnerVendor);
+    AssetVendor partnerVendorInShowcase = makeVendor(Partner);
+    AssetVendor partnerVendorNotInShowcase = makeVendor(Partner);
+    Asset missing = givenAssetInResultsWithVendor(partnerVendorInShowcase);
+    givenAssetInResultsWithVendor(partnerVendorNotInShowcase);
+    List<Asset> expected = makeConsecutiveAssets(partnerVendorInShowcase);
     // ACT
     whenOptimize();
     // ASSERT
@@ -40,7 +42,7 @@ class BugsTests
   {
     var hotspotMembers = searchResults.getHotspot(hotspotKey).getMembers().toArray();
     var expectedMembers = expected.toArray();
-    return Arrays.equals(hotspotMembers, expectedMembers);
+    return Arrays.equals(expectedMembers, hotspotMembers);
   }
 
   private boolean thenHotspotDoesNotHave(HotspotKey hotspotKey, Asset... nonMembers)
