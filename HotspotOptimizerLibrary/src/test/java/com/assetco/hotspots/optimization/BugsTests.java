@@ -15,7 +15,7 @@ class BugsTests {
     private SearchResults searchResults;
     private SearchResultHotspotOptimizer optimizer;
 
-    private static Asset makeAsset(AssetVendor vendor) {
+    private static Asset makeAssetWithVendor(AssetVendor vendor) {
         String string = "any";
         URI uri = URI.create(string);
         Money money = new Money(BigDecimal.ZERO);
@@ -43,7 +43,7 @@ class BugsTests {
         List<Asset> expected = new ArrayList<>();
         expected.add(givenAssetInResultsWithVendor(partnerVendorInShowcase));
         givenAssetInResultsWithVendor(partnerVendorNotInShowcase);
-        expected.addAll(makeConsecutiveAssets(partnerVendorInShowcase));
+        expected.addAll(makeConsecutiveAssetsWithVendor(partnerVendorInShowcase));
         // ACT
         whenOptimize();
         // ASSERT
@@ -61,7 +61,7 @@ class BugsTests {
         optimizer.optimize(searchResults);
     }
 
-    private List<Asset> makeConsecutiveAssets(AssetVendor vendor) {
+    private List<Asset> makeConsecutiveAssetsWithVendor(AssetVendor vendor) {
         List<Asset> result = new ArrayList<>();
 
         for (int i = 0; i < NUM_PARTNER_CONSECUTIVE_ASSETS; i++) {
@@ -71,7 +71,7 @@ class BugsTests {
     }
 
     private Asset givenAssetInResultsWithVendor(AssetVendor vendor) {
-        Asset asset = makeAsset(vendor);
+        Asset asset = makeAssetWithVendor(vendor);
         searchResults.addFound(asset);
         return asset;
     }
