@@ -13,6 +13,7 @@ import static com.assetco.search.results.HotspotKey.*;
 class BugsTests {
     private static final int NUM_PARTNER_CONSECUTIVE_ASSETS = 4;
     private SearchResults searchResults;
+    private SearchResultHotspotOptimizer optimizer;
 
     private static Asset makeAsset(AssetVendor vendor) {
         String string = "any";
@@ -31,6 +32,7 @@ class BugsTests {
     @BeforeEach
     public void Setup() {
         searchResults = new SearchResults();
+        optimizer = new SearchResultHotspotOptimizer();
     }
 
     @Test
@@ -56,7 +58,6 @@ class BugsTests {
     }
 
     private void whenOptimize() {
-        SearchResultHotspotOptimizer optimizer = new SearchResultHotspotOptimizer();
         optimizer.optimize(searchResults);
     }
 
