@@ -65,10 +65,10 @@ class SalesInfoBasedOptimizer {
         }
 
         for (var asset : searchResults.getFound()) {
+            if (searchResults.getHotspot(HighValue).getMembers().contains(asset))
+                continue;
             if (asset.getPurchaseInfoLast30Days().getTimesShown() >= 50000 &&
                     asset.getPurchaseInfoLast30Days().getTimesPurchased() * 125 >= asset.getPurchaseInfoLast30Days().getTimesShown())
-                // [jmj, 2017/jun/5]: This is where you would fix the problem.
-                // Make sure the asset isn't already in the hotspot before adding
                 searchResults.getHotspot(HighValue).addMember(asset);
         }
     }

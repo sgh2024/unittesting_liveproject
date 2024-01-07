@@ -87,14 +87,14 @@ class BugsTests {
     }
 
     @Test
-    void wellSoldAssetsGetTwoHighValueSpots() {
+    void wellSoldAssetsGetsOnlyOneHighValueSpot() {
         // ARRANGE
         var vendor = makeVendor(Basic);
         var wellSoldAsset = givenWellSoldAssetInResults(vendor);
         // ACT
         whenOptimize();
         // ASSERT
-        timesInHotspot(2, HighValue, wellSoldAsset);
+        timesInHotspot(1, HighValue, wellSoldAsset);
     }
 
     private void thenHotspotHasExactly(HotspotKey hotspotKey,
