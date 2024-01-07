@@ -9,7 +9,6 @@ import java.util.*;
 
 import static com.assetco.search.results.AssetVendorRelationshipLevel.*;
 import static com.assetco.search.results.HotspotKey.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BugsTests {
@@ -62,20 +61,19 @@ class BugsTests {
     }
 
     @Test
-    void notAllLowPriorityHotTopicsAreHighlighted() {
+    void allLowPriorityHotTopicsAreHighlighted() {
         // ARRANGE
         var highPriorityTopic = new AssetTopic("0", "0");
         var lowPriorityTopic = new AssetTopic("1", "1");
         var vendor = makeVendor(Basic);
-        var expected = new ArrayList<>(makeConsecutiveAssetsWithTopics(1, vendor, lowPriorityTopic));
-        expected.addAll(makeConsecutiveAssetsWithTopics(3, vendor, highPriorityTopic));
-        var missing = makeConsecutiveAssetsWithTopics(1, vendor, lowPriorityTopic);
+        var expected = new ArrayList<>(makeConsecutiveAssetsWithTopics(2, vendor, lowPriorityTopic));
+        makeConsecutiveAssetsWithTopics(3, vendor, highPriorityTopic);
+        expected.addAll(makeConsecutiveAssetsWithTopics(4, vendor, lowPriorityTopic));
         setHotTopics(highPriorityTopic, lowPriorityTopic);
         // ACT
         whenOptimize();
         // ASSERT
         thenHotspotContains(Highlight, expected);
-        thenHotspotDoesNotContain(Highlight, missing);
     }
 
     private void thenHotspotHasExactly(HotspotKey hotspotKey,
@@ -89,12 +87,6 @@ class BugsTests {
                                      List<Asset> expected) {
         var hotspotMembers = searchResults.getHotspot(hotspotKey).getMembers();
         assertTrue(hotspotMembers.containsAll(expected));
-    }
-
-    private void thenHotspotDoesNotContain(HotspotKey hotspotKey,
-                                           List<Asset> expected) {
-        var hotspotMembers = searchResults.getHotspot(hotspotKey).getMembers();
-        assertFalse(expected.stream().anyMatch(hotspotMembers::contains));
     }
 
     private void whenOptimize() {
