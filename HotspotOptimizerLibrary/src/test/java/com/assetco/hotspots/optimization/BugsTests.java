@@ -9,6 +9,7 @@ import java.util.*;
 
 import static com.assetco.search.results.AssetVendorRelationshipLevel.*;
 import static com.assetco.search.results.HotspotKey.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BugsTests {
@@ -32,6 +33,15 @@ class BugsTests {
         Money money = new Money(BigDecimal.ZERO);
         AssetPurchaseInfo info = new AssetPurchaseInfo(1, 1, money, money);
         return new Asset(string, string, uri, uri, info, info, Arrays.asList(topics), vendor);
+    }
+
+    private static Asset makeWellSoldAsset(AssetVendor vendor) {
+        var string = "any";
+        var uri = URI.create(string);
+        var money = new Money(BigDecimal.ONE);
+        var info24hours = new AssetPurchaseInfo(1000, 5, money, money);
+        var info30days = new AssetPurchaseInfo(50000, 400, money, money);
+        return new Asset(string, string, uri, uri, info30days, info24hours, null, vendor);
     }
 
     private static AssetVendor makeVendor(AssetVendorRelationshipLevel relationshipLevel) {
@@ -76,6 +86,17 @@ class BugsTests {
         thenHotspotContains(Highlight, expected);
     }
 
+    @Test
+    void wellSoldAssetsGetTwoHighValueSpots() {
+        // ARRANGE
+        var vendor = makeVendor(Basic);
+        var wellSoldAsset = givenWellSoldAssetInResults(vendor);
+        // ACT
+        whenOptimize();
+        // ASSERT
+        timesInHotspot(2, HighValue, wellSoldAsset);
+    }
+
     private void thenHotspotHasExactly(HotspotKey hotspotKey,
                                        List<Asset> expected) {
         var hotspotMembers = searchResults.getHotspot(hotspotKey).getMembers().toArray();
@@ -87,6 +108,11 @@ class BugsTests {
                                      List<Asset> expected) {
         var hotspotMembers = searchResults.getHotspot(hotspotKey).getMembers();
         assertTrue(hotspotMembers.containsAll(expected));
+    }
+
+    private void timesInHotspot(int expected, HotspotKey hotspotKey, Asset wellSoldAsset) {
+        assertEquals(expected, searchResults.getHotspot(hotspotKey).getMembers().stream()
+            .filter(wellSoldAsset::equals).count());
     }
 
     private void whenOptimize() {
@@ -126,6 +152,12 @@ class BugsTests {
     private Asset givenAssetInResultsWithTopics(AssetVendor vendor,
                                                 AssetTopic... topics) {
         Asset asset = makeAssetWithTopics(vendor, topics);
+        searchResults.addFound(asset);
+        return asset;
+    }
+
+    private Asset givenWellSoldAssetInResults(AssetVendor vendor) {
+        Asset asset = makeWellSoldAsset(vendor);
         searchResults.addFound(asset);
         return asset;
     }
