@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.util.ArrayList;
 
-import static com.assetco.search.results.AssetVendorRelationshipLevel.Partner;
-import static com.assetco.search.results.HotspotKey.*;
+import static com.assetco.search.results.AssetVendorRelationshipLevel.*;
+import static com.assetco.search.results.HotspotKey.Deals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DealsPinningTests {
@@ -38,20 +39,76 @@ class DealsPinningTests {
     }
 
     @Test
-    void revenue1000GetsSpotInDeals()
-    {
+    void singlePartnerToDealsHotspot() {
+        executeDealsTest(new AssetVendorRelationshipLevel[]{Partner}, 1000, 0, false, new int[]{1});
+    }
+
+    @Test
+    void singleGoldNotToDealsHotspot() {
+        executeDealsTest(new AssetVendorRelationshipLevel[]{Gold}, 1000, 700, false, new int[]{0});
+    }
+    @Test
+    void singleGoldToDealsHotspot() {
+        executeDealsTest(new AssetVendorRelationshipLevel[]{Gold}, 1000, 0, false, new int[]{1});
+    }
+
+    @Test
+    void singleSilverToDealsHotspot() {
+        executeDealsTest(new AssetVendorRelationshipLevel[]{Silver}, 10000, 5000, false, new int[]{1});
+    }
+
+    @Test
+    void singleSilverNotToDealsHotspot() {
+        executeDealsTest(new AssetVendorRelationshipLevel[]{Silver}, 1000, 0, false, new int[]{0});
+    }
+
+    @Test
+    void singleSilverToDealsHotspotWithDealEligibility() {
+        executeDealsTest(new AssetVendorRelationshipLevel[]{Silver}, 1500, 800, true, new int[]{1});
+    }
+
+    @Test
+    void doubleSilverToDealsHotspot() {
+        executeDealsTest(new AssetVendorRelationshipLevel[]{Silver, Silver}, 100000, 0, true, new int[]{2, 2});
+    }
+
+    @Test
+    void partnerAndGoldToDealsHotspot() {
+        executeDealsTest(new AssetVendorRelationshipLevel[]{Partner, Gold}, 100000, 0, true, new int[]{1, 1});
+    }
+
+    @Test
+    void partnerAndSilverToDealsHotspot() {
+        executeDealsTest(new AssetVendorRelationshipLevel[]{Partner, Silver}, 10000, 0, true, new int[]{1, 1});
+    }
+
+    private void setAssessments(AssetAssessments assessments) {
+        optimizer.setAssessments(assessments);
+    }
+
+    private void executeDealsTest(AssetVendorRelationshipLevel[] relationshipLevel,
+                                  int revenue,
+                                  int royalties,
+                                  boolean assetsAreValid,
+                                  int[] expectedTimesInHotspot) {
         // ARRANGE
-        var vendor = makeVendor(Partner);
-        var asset = givenAssetInResultsWithRevenueAndRoyalties(vendor, 1000, 0);
+        var assets = new ArrayList<Asset>();
+        for (var level : relationshipLevel) {
+            var vendor = makeVendor(level);
+            assets.add(givenAssetInResultsWithRevenueAndRoyalties(vendor, revenue, royalties));
+        }
+        setAssessments(a -> assetsAreValid);
         // ACT
         whenOptimize();
         // ASSERT
-        timesInHotspot(1, Deals, asset);
+        for (int i=0; i<assets.size(); i++) {
+            timesInHotspot(expectedTimesInHotspot[i], Deals, assets.get(i));
+        }
     }
 
-    private void timesInHotspot(int expected, HotspotKey hotspotKey, Asset wellSoldAsset) {
+    private void timesInHotspot(int expected, HotspotKey hotspotKey, Asset asset) {
         assertEquals(expected, searchResults.getHotspot(hotspotKey).getMembers().stream()
-            .filter(wellSoldAsset::equals).count());
+            .filter(asset::equals).count());
     }
 
     private void whenOptimize() {
