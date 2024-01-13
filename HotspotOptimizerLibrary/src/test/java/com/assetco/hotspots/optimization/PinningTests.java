@@ -42,7 +42,7 @@ class PinningTests {
     {
         // ARRANGE
         var vendor = makeVendor(Partner);
-        var asset = givenAssetInResultsWithRevenue(vendor, 1000, 0);
+        var asset = givenAssetInResultsWithRevenueAndRoyalties(vendor, 1000, 0);
         // ACT
         whenOptimize();
         // ASSERT
@@ -58,8 +58,8 @@ class PinningTests {
         optimizer.optimize(searchResults);
     }
 
-    private Asset givenAssetInResultsWithRevenue(AssetVendor vendor,
-                                                 double revenue, double royalties) {
+    private Asset givenAssetInResultsWithRevenueAndRoyalties(AssetVendor vendor,
+                                                             double revenue, double royalties) {
         Asset asset = makeAssetWithRevenueAndRoyalties(vendor, revenue, royalties);
         searchResults.addFound(asset);
         return asset;
