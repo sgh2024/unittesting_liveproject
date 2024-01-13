@@ -11,7 +11,7 @@ import static com.assetco.search.results.AssetVendorRelationshipLevel.Partner;
 import static com.assetco.search.results.HotspotKey.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class PinningTests {
+class DealsPinningTests {
     private SearchResults searchResults;
     private SearchResultHotspotOptimizer optimizer;
 
