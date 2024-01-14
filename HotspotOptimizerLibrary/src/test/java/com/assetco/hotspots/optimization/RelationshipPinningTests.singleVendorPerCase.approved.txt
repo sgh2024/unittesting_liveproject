@@ -1,0 +1,68 @@
+Case {
+  (Asset: 1, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 2, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+}
+
+Case {
+  (Asset: 1, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 2, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 3, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+}
+
+Case {
+  (Asset: 1, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 2, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 3, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 4, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+}
+
+Case {
+  (Asset: 1, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 2, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 3, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 4, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 5, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+}
+
+Case {
+  (Asset: 1, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 2, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 3, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 4, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 5, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=1, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 6, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=1, Deals=1})
+}
+
+Case {
+  (Asset: 1, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 2, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 3, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 4, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 5, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=1})
+  (Asset: 6, Vendor: 0, RelationshipLevel: Partner ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=1, Deals=1})
+}
+
+Case {
+  (Asset: 1, Vendor: 0, RelationshipLevel: Basic ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 2, Vendor: 0, RelationshipLevel: Basic ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 3, Vendor: 0, RelationshipLevel: Basic ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 4, Vendor: 0, RelationshipLevel: Basic ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 5, Vendor: 0, RelationshipLevel: Basic ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=0, TopPicks=0, Deals=0})
+}
+
+Case {
+  (Asset: 1, Vendor: 0, RelationshipLevel: Silver ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+  (Asset: 2, Vendor: 0, RelationshipLevel: Silver ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+  (Asset: 3, Vendor: 0, RelationshipLevel: Silver ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+  (Asset: 4, Vendor: 0, RelationshipLevel: Silver ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+  (Asset: 5, Vendor: 0, RelationshipLevel: Silver ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+}
+
+Case {
+  (Asset: 1, Vendor: 0, RelationshipLevel: Gold ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+  (Asset: 2, Vendor: 0, RelationshipLevel: Gold ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+  (Asset: 3, Vendor: 0, RelationshipLevel: Gold ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+  (Asset: 4, Vendor: 0, RelationshipLevel: Gold ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+  (Asset: 5, Vendor: 0, RelationshipLevel: Gold ) -> ({Showcase=0, HighValue=1, Highlight=0, Fold=1, TopPicks=0, Deals=0})
+}
+
