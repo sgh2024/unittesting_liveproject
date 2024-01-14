@@ -68,6 +68,18 @@ class RelationshipPinningTests {
         Approvals.verifyAll("", result, this::listToString);
     }
 
+    @Test
+    void multiPartnerVendorsPerCase() {
+        var result = new ArrayList<ArrayList<TreeMap<Asset, TreeMap<HotspotKey, Long>>>>();
+        result.add(actOnNumTimesOfTwoPartnerVendors(2, false));
+        result.add(actOnNumTimesOfTwoPartnerVendors(3, false));
+        result.add(actOnNumTimesOfTwoPartnerVendors(3, true));
+        result.add(actOnNumTimesOfTwoPartnerVendors(5, false));
+        result.add(actOnNumTimesOfTwoPartnerVendors(6, false));
+        result.add(actOnNumTimesOfTwoPartnerVendors(7, true));
+        Approvals.verifyAll("", result, this::listToString);
+    }
+
     private String entryToString(TreeMap<Asset, TreeMap<HotspotKey, Long>> entry, String leadingSpaces) {
         StringBuilder result = new StringBuilder();
         for (var e : entry.entrySet()) {
@@ -89,6 +101,35 @@ class RelationshipPinningTests {
         }
         result.append("}\n");
         return result.toString();
+    }
+
+    private ArrayList<TreeMap<Asset, TreeMap<HotspotKey, Long>>> actOnNumTimesOfTwoPartnerVendors(int num, boolean prefillShowcaseHotspot) {
+        // ARRANGE
+        setUp();
+        int vendorCount = 2;
+        var vendor1 = makeVendor(Partner);
+        var vendor2 = makeVendor(Partner);
+        var assets = new ArrayList<Asset>();
+        for (int i = 0; i < num; i++) {
+            assets.add(givenAssetInResultsWithVendor(vendor1));
+            assets.add(givenAssetInResultsWithVendor(vendor2));
+        }
+        if (prefillShowcaseHotspot) {
+            var highPriorityTopic = new AssetTopic("0", "0");
+            var partnerVendor = makeVendor(Partner);
+            givenAssetInResultsWithTopics(partnerVendor, highPriorityTopic);
+            optimizer.setHotTopics(() -> List.of(highPriorityTopic));
+        }
+        // ACT
+        whenOptimize();
+        // TO ASSERT
+        var result = new ArrayList<TreeMap<Asset, TreeMap<HotspotKey, Long>>>();
+        for (int i = 0; i < num * vendorCount; i++) {
+            var resultEntry = new TreeMap<Asset, TreeMap<HotspotKey, Long>>((lhs, rhs) -> lhs.getId().toString().compareTo(rhs.getId().toString()));
+            resultEntry.put(assets.get(i), getCountInHotspots(assets.get(i)));
+            result.add(resultEntry);
+        }
+        return result;
     }
 
     private ArrayList<TreeMap<Asset, TreeMap<HotspotKey, Long>>> actOnNumTimesAssetOfLevel(AssetVendorRelationshipLevel relationshipLevel, int num, boolean prefillShowcaseHotspot) {
