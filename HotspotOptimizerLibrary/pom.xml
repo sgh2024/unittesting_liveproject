@@ -19,6 +19,11 @@
             <artifactId>SearchResults</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.approvaltests</groupId>
+            <artifactId>approvaltests</artifactId>
+            <version>18.5.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
