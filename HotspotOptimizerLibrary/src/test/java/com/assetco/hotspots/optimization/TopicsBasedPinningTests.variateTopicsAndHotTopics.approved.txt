@@ -1,0 +1,79 @@
+Case[0] = {
+ HotTopics: [],
+  (Asset: 0, Topics: [] ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=0, TopPicks=0, Deals=0})
+}
+
+Case[1] = {
+ HotTopics: [],
+  (Asset: 0, Topics: [low] ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=0, TopPicks=0, Deals=0})
+}
+
+Case[2] = {
+ HotTopics: [low],
+  (Asset: 0, Topics: [low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+}
+
+Case[3] = {
+ HotTopics: [high, low],
+  (Asset: 0, Topics: [low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 1, Topics: [low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+}
+
+Case[4] = {
+ HotTopics: [low],
+  (Asset: 0, Topics: [high] ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 1, Topics: [low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 2, Topics: [low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+}
+
+Case[5] = {
+ HotTopics: [high],
+  (Asset: 0, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 1, Topics: [low] ) -> ({Showcase=0, HighValue=0, Highlight=0, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 2, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 3, Topics: [high, low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+}
+
+Case[6] = {
+ HotTopics: [high, low],
+  (Asset: 0, Topics: [low] ) -> ({Showcase=0, HighValue=0, Highlight=1, Fold=0, TopPicks=1, Deals=0})
+  (Asset: 1, Topics: [high, low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 2, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 3, Topics: [low] ) -> ({Showcase=0, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 4, Topics: [low] ) -> ({Showcase=0, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 5, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 6, Topics: [high, low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+}
+
+Case[7] = {
+ HotTopics: [high, low],
+  (Asset: 0, Topics: [high, low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 1, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 2, Topics: [low] ) -> ({Showcase=0, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 3, Topics: [low] ) -> ({Showcase=0, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 4, Topics: [low] ) -> ({Showcase=0, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 5, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 6, Topics: [high, low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 7, Topics: [high] ) -> ({Showcase=0, HighValue=0, Highlight=1, Fold=0, TopPicks=1, Deals=0})
+}
+
+Case[8] = {
+ HotTopics: [high],
+  (Asset: 0, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 1, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 2, Topics: [high, low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 3, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 4, Topics: [high, low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+}
+
+Case[9] = {
+ HotTopics: [high, low],
+  (Asset: 0, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 1, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 2, Topics: [high, low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 3, Topics: [high] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 4, Topics: [high, low] ) -> ({Showcase=1, HighValue=0, Highlight=1, Fold=0, TopPicks=0, Deals=0})
+  (Asset: 5, Topics: [high] ) -> ({Showcase=0, HighValue=0, Highlight=1, Fold=0, TopPicks=1, Deals=0})
+  (Asset: 6, Topics: [high] ) -> ({Showcase=0, HighValue=0, Highlight=1, Fold=0, TopPicks=1, Deals=0})
+}
+
